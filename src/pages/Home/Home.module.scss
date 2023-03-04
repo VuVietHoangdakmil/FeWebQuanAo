@@ -1,0 +1,132 @@
+.wrapper{
+    margin-top: 50px;
+    
+}
+.slider{
+    position: relative;
+    height: 500px;
+   
+    overflow: hidden;
+
+    button{
+        position: absolute;
+        top:50%;
+        border: transparent;
+        transform: translateY(-50%);
+       background-color: transparent;
+       color: white;
+       font-size: 40px;
+        width: 50px;
+        height: 50px;
+        z-index: 1;
+        cursor: pointer;
+
+        &:hover{
+            opacity: 0.6;
+        }
+    }
+    .prev{
+        left: 0;
+    }
+    .next{
+        right: 0;
+    }
+    .vtri{
+       
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid  white;
+        margin:  0 10px;
+    }
+    .vtris{
+        z-index: 1;
+        position: absolute;
+        bottom: 15px;
+        display: flex;
+        left: 50%;
+        transform: translateX(-50%);
+        
+    }
+    .vtri.active{
+        background-color: white;
+    }
+    
+}
+.images{
+   display: flex;
+  
+    img{
+        position: absolute;
+       transition: all 0.3s ease-in-out;
+        width: 100%;
+        height: 100%;
+        
+    }
+    .activeNext{
+        transform: translateX(100%);
+    }
+    .activePrev{
+        transform: translateX(-100%);
+    }
+    .active{
+        transform: translateX(0);
+        
+    }
+   
+    
+}
+.Title{
+    border-bottom: 2px solid black;
+    margin-bottom: 45px;
+    h1{
+        margin-bottom: 10px;
+        text-align: center;
+    }
+}
+.ProductNewWarrper{
+    margin-top: var(--Margin_top);
+}
+.PoductNew{
+    text-align: center;
+    margin: 10px;
+    img{
+        width: 100%;
+        height: 280px;
+    }
+    h1,div, button{
+        margin: 6px 0;
+    }
+    h1{
+        font-size: 20px;
+    }
+    button{
+        opacity: 0;
+        transition: all 0.5s ease-in-out;
+    }
+
+    &:hover > button{
+        opacity: 1;
+        &:hover{
+           filter: brightness(120%);
+        }
+    }
+    img{
+        transition: all 0.5s ease-in-out;;
+        &:hover{
+            transform: scale(1.2);
+        }
+    }
+    a{
+        display: block;
+        overflow: hidden;
+    }
+}
+.cutstomRow{
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+
+    
+    

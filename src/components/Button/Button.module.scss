@@ -1,0 +1,11 @@
+.btn{
+    cursor: pointer;
+    background-color: var(--color_red);
+    border: none;
+    border-radius: 5px;
+    color: white;
+   
+    &:hover{
+        opacity: 0.6;
+    }
+}

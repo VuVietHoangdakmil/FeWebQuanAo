@@ -1,0 +1,29 @@
+.wrapper{
+    width: 100%;
+    background-color: #dcdcdc;
+    height: 50px;
+}
+#rowHeader{
+    height: 100%;
+    ul{
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    li{
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+    a{
+        color: var(--textTitle_color);
+        font-size: 20px;
+        font-weight: 700;
+       padding: 11px 10px;
+       
+    }
+    li.active{
+        border-bottom: 2px solid var(--color_red);
+    }
+}

@@ -1,0 +1,97 @@
+.wrapper{
+    width: 100%;
+    margin-top: 50px;
+}
+.ImgProduct{
+   
+    margin-right: 6px;
+    height: 420px;
+    overflow: hidden;
+
+    img{
+        height: 100%;
+        width: 100%;
+    }
+}
+.Action{
+
+    margin-left: 6px;
+    a,.ListSize
+    ,.price
+    ,.nameProduct
+    {
+        margin-bottom: 20px;
+    }
+
+    a{
+        display: block;
+        font-size: 20px;
+        color: var(--textTitle_color);
+    }
+    .ListSize{
+        display: flex;
+        
+    }
+    .price{
+        font-size: 34px;
+    }
+    .Click{
+        display: flex;
+        margin-top: 80px;
+    }
+    .nameProduct{
+        font-size: 26px;
+    }
+    .actionSL{
+        display: flex;
+        height: 40px;
+        margin-right: 50px;
+        overflow: hidden;
+        input{
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+            padding-left: 12px;
+            border: none;
+            background-color: rgb(240, 241, 241);
+            font-size: 18px;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        div{
+            width: 40px;
+            height: 40px;
+            background-color: var(--color_red);
+            text-align: center;
+            line-height: 40px;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+       
+    }
+   
+}
+.blockSize{
+    
+    label{
+        border: 1px solid rgb(44, 42, 42);
+        margin: 10px;
+        width: 35px;
+        height: 35px;
+        text-align: center;
+        line-height: 35px;
+        display: block;
+        cursor: pointer;
+    }
+    .activeLabel{
+        background-color:rgb(44, 42, 42);
+        color: white;
+    }
+    input{
+       display: none;
+    }
+
+    
+}

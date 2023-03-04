@@ -1,0 +1,132 @@
+.wrapper{
+    margin-top: 50px;
+}
+
+.Title_Table{
+    padding-bottom: 8px;
+    border-bottom: 3px solid var(--input_color);
+
+    div{
+        font-size: 24px;
+        color: black;
+
+    }
+    .customCol{
+        display: flex;
+        flex-direction: row-reverse;
+    }
+}
+
+.ConTen_Table{
+    align-items: center;
+    padding-bottom: 54px;
+}
+.wrapperROWCONTENT {
+    & .ConTen_Table:first-child{
+        margin-top: 40px;
+    }
+   
+}
+.conTentSp{
+    display: flex;
+    align-items: center;
+    position: relative;
+    button{
+        background-color: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: var(--input_color);
+       position: absolute;
+       top:-16px;
+       left: -11px;
+       &:hover{
+         color: var(--color_red);
+       }
+    }
+    img{
+        width: 120px;
+        height: 100px;
+        margin-right: 10px;
+        border: 1px solid var(--input_color);
+        border-radius: 5px;
+    }
+    span{
+        color: var(--text_mo);
+        font-size: 18px;
+    }
+
+}
+.conTentPrice, 
+.conTentPriceSum {
+    color: black;
+    font-size: 18px;
+}
+.conTentQuality{
+    display: flex;
+    align-items: center;
+    input{
+        width: 25px;
+        height: 25px;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+        background-color: var(--input_color);
+        margin: 0 5px;
+        padding-left: 5px;
+    }
+    button{
+        background-color: var(--color_red);
+        border: none;
+        width: 25px;
+        height: 25px;
+        border-radius: 5px;
+        text-align: center;
+        line-height: center;
+        color: white;
+        cursor: pointer;
+        
+        &:hover{
+            opacity: 0.8;
+        }
+    }
+}
+.conTentPriceSum{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.ActionCart{
+    padding-right: 20px;
+    border-right:  2px solid var(--input_color) ;
+
+
+}
+.conTentSize{
+    position: absolute;
+    top: -22px;
+    left: 110px;
+}   
+
+.ActionPay{
+   padding-left: 20px ;
+}
+.RowContent{
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    border-bottom: solid 2px var(--input_color);
+    padding-bottom: 4px;
+    p{
+        flex: 1;
+        color: var(--text_mo);
+        font-size: 20px;
+    }
+    span{
+        color: black;
+        font-size: 20px
+    }
+
+}
+.boxThanhtoan{
+    margin-top: 25px;
+}

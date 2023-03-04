@@ -1,0 +1,235 @@
+.wrapper{
+    background-color: var(--main_clolor);
+    height: 80px;
+    
+}
+.DangKyAndDangNhap{
+    display:  flex;
+    align-items: center;
+   cursor: pointer;
+
+    button{
+        color: white;
+        font-size: 18px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+    div{
+        background-color: white;
+        margin:  0 6px;
+        transform: rotate(50deg);
+        width: 1.5px;
+        transform: rotate(18deg);
+        height: 15px;
+    }
+    
+    .Dangky:hover{
+        opacity: 0.5;
+    }
+    .DangNhap:hover{
+        opacity: 0.5;
+    }
+}
+#rowHeader{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: space-between;
+    .LogoWeb{
+        color: white;
+        font-size: 40px;
+    }
+    .Action{
+        color: aliceblue;
+        display: flex;
+        align-items: center;
+    }
+}
+.ActionUser{
+    display: flex;
+    align-items: center;
+
+    img{
+         border-radius: 50%;
+        margin-right: 10px;
+        width: 40px;
+        height: 40px;
+        
+    }
+    .nameUser{
+        color: aliceblue;
+        font-size: 18px;
+        margin-right: 10px;
+    }
+}
+.dropSeting{
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    position: relative;
+    z-index:1001;
+    
+}
+.iconSetting{
+    transform: rotate(180deg);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    
+}
+.iconSetting.active{
+    transform: rotate(0deg);
+}
+.menuSetting{
+    position: absolute;
+    top: 229%;
+    background-color:var(--form_color);
+    min-width: 227px;
+    right: -151px;
+    animation: slow linear 0.2s;
+    box-shadow: 2px 13px 20px rgb(143, 142, 142);
+    border-radius: 4px;
+    ul{
+        padding: 10px;
+        cursor: auto;
+    }
+
+    li{
+        margin: 16px;
+        color:  var(--textTitle_color);
+        cursor: pointer;
+        &:first-child{
+            margin-top: 0;
+        }
+        &:last-child{
+            margin-bottom: 0;
+        }
+        &:hover{
+            opacity: 0.6;
+        }
+    }
+    a{
+        color:  var(--textTitle_color);
+    }
+}
+@keyframes slow {
+    0%{
+        opacity: 0.2;
+    }
+    50%{
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.formpopup{
+    background-color: white;
+    min-height: 369px;
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 100px;
+    display: flex;
+    animation: topToBottom 0.4s ease-in-out;
+}
+@keyframes topToBottom{
+    from{
+        transform: translateY(-40px);
+        opacity: 0.5;
+    }
+    to{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+.FormDangNhap{
+   width: 100%;
+    padding: 20px 25px;
+
+    h1{
+        text-align: center;
+        font-size: 25px;
+        color: var(--textTitle_color);
+    }
+}
+.search{
+    position: relative;
+    margin-right: 25px;
+    padding: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    &:hover > form{
+        display: block;
+    }
+   
+    form{
+        position: absolute;
+        top: 41px;
+        right: -29px;
+        box-shadow: 10px 10px 20px rgb(80, 78, 78);
+        border-radius: 5px;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: none;
+        .box{
+            display: flex;
+            align-items: center;
+            background-color: var(--input_color);
+            margin: 20px 20px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        &::after{
+            content: "";
+            display: block;
+            position: absolute;
+            top: -4px;
+            right: 32px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+            transform: rotate(-45deg);
+        }
+        &::before{
+            content: "";
+            display: block;
+            position: absolute;
+            top: -21px;
+            right: 0;
+            width: 100%;
+            height: 40px;
+            background-color: transparent;
+        }
+    }
+    input{
+        height: 35px;
+        border: none;
+        background-color: transparent;
+        outline: none;
+        padding-left: 10px;
+    }
+    button{
+        height: 35px;
+        width: 35px;
+        border: transparent;
+        background-color: transparent;
+        color: var(--color_red);
+        font-size: 20px;
+        cursor: pointer;
+    }
+}
+
+.Cart{
+    color: white;
+    position: relative;
+    cursor: pointer;
+    div{
+        position: absolute;
+        top: 18px;
+       
+    }
+}
+

@@ -1,0 +1,22 @@
+.warrap{
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0px;
+    input{
+        height: 40px;
+        outline: none;
+        border: none;
+        margin-top: 10px;
+        padding-left: 10px;
+        background-color: var(--input_color);
+        border-radius: 5px;
+    }
+    label{
+        color: var(--lablel_color);
+        font-weight: 1000;
+        font-size: 16px;
+    }
+}
+.error{
+    color: red;
+}

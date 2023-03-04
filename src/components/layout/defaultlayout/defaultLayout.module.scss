@@ -1,0 +1,37 @@
+.Header{
+    width: 100%;
+    position:sticky;
+    top: 0;
+    z-index: 5000;
+}
+.wrapper{
+    position: relative;
+}
+
+.Scolltop{
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border-radius:50% ;
+    background-color: var(--color_red);
+    right: 37px;
+    text-align: center;
+    line-height: 40px;
+    color: white;
+    animation: identifier 0.5s ease-in-out  ;
+    transition:  filter 0.5s ease-in-out;
+    animation-fill-mode: forwards;
+    &:hover{
+        cursor: pointer;
+        filter: brightness(150%);
+    }
+}
+@keyframes identifier {
+    from{
+        opacity: 0;
+        bottom: 50px
+    }to{
+        opacity: 1;
+        bottom: 69px;
+    }
+}

@@ -1,0 +1,10 @@
+.wrapper{
+    display: flex;
+    font-size: 20px ;
+    span{
+        margin: 0 5px;
+    }
+    .pagenumber{
+        color: var(--color_red);
+    }
+}
