@@ -1,8 +1,10 @@
 import styles from "./Sliderbar.module.scss";
 
-import { Link, useLocation } from "react-router-dom";
 
+import { Link, useLocation } from "react-router-dom";
+import {memo} from "react"
 function Sliderbar() {
+  console.log("renderSlider")
   const { pathname } = useLocation();
   const Lists = [
     { Path: "/", Content: "Trang chủ" },
@@ -32,4 +34,4 @@ function Sliderbar() {
   );
 }
 
-export default Sliderbar;
+export default memo(Sliderbar);

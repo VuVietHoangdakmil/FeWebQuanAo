@@ -8,6 +8,7 @@ import clsx from "clsx";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import { isURL } from "../../../../FuncTions";
 import { getSecttion, setSecttion } from "../../../../Storage";
 import { Context } from "../../../../Context";
 import Input from "../../../Input";
@@ -16,7 +17,7 @@ import BlockBlur from "../../../BlockBlur";
 import Button from "../../../Button";
 
 function FormDangNhap() {
-  const { CallApiLogin } = useContext(Context);
+  const { CallApiLogin, LoginGG } = useContext(Context);
 
   const messeNull = "Vui Lòng không để trống";
   const messeLength = "Yêu cầu độ dài của mật khẩu lớn hơn 5";
@@ -100,13 +101,14 @@ function FormDangNhap() {
       <Button fontSize="18px" width="120px" height="40px">
         Đăng Nhập
       </Button>
+      <div onClick={LoginGG}> haongf gg</div>
     </form>
   );
 }
 
 function FormDangKy() {
   console.log("FormDangKy");
-  const { CallApiLogin } = useContext(Context);
+  const { CallApiLogin, LogOutGoogle } = useContext(Context);
   function isPhoneNumber(str) {
     const pattern = /^(\+?\d{1,3}[- ]?)?\d{10}$/;
     return pattern.test(str);
@@ -355,24 +357,28 @@ function DangKyAndDangNhap() {
 function ActionUser() {
   const navigate = useNavigate();
   const [isForm, setIsForm] = useState(false);
-  const { setIsLogin, infoUser } = useContext(Context);
+  const { setIsLogin, infoUser, LogOutGoogle } = useContext(Context);
+  let img;
   function logout() {
     setSecttion("IsLogin", false);
     const kq = getSecttion("IsLogin");
     setIsLogin(kq);
     navigate("/");
+    LogOutGoogle();
   }
 
   function handleTogger() {
     setIsForm(!isForm);
   }
+  if (isURL(infoUser.HINH_DAI_DIEN)) {
+    img = infoUser.HINH_DAI_DIEN;
+  } else {
+    img = `../../img/AvatarDefault/${infoUser.HINH_DAI_DIEN}`;
+  }
   return (
     <div className={styles.ActionUser}>
       <div className={styles.nameUser}>{infoUser.TEN_KH}</div>
-      <img
-        src={`img/AvatarDefault/${infoUser.HINH_DAI_DIEN}`}
-        alt="Example Image"
-      />
+      <img src={img} alt="Example Image" />
       <div className={styles.dropSeting}>
         <div
           onClick={() => {
@@ -388,8 +394,12 @@ function ActionUser() {
               <li>
                 <Link to="">Đơn Đã Đặt</Link>
               </li>
-              <li>
-                <Link to="">Thông Tin Cá Nhân</Link>
+              <li
+                onClick={() => {
+                  setIsForm((p) => !p);
+                }}
+              >
+                <Link to={`/User/${infoUser.MA_KH}`}>Thông Tin Cá Nhân</Link>
               </li>
               <li onClick={logout}>Đăng Xuất</li>
             </ul>
@@ -402,7 +412,7 @@ function ActionUser() {
 }
 
 function Header() {
-  console.log("Header");
+  console.log("reRenderHeader");
   const { isLogin, keyword, setKeyword, myCarts } = useContext(Context);
   const { pathname } = useLocation();
   const navigate = useNavigate();

@@ -4,6 +4,7 @@ import Allproduct from '../pages/Allproduct'
 import ProductDetail from '../pages/ProductDetail'
 import Carts from '../pages/Cart'
 import Payment from '../pages/Payment/index,'
+import InfoUser from '../pages/InfoUser'
 const publicRouters = [
   { path: "/", Page: Home },
   { path: "/Shirt", Page: Shirt },
@@ -11,6 +12,7 @@ const publicRouters = [
   { path: "/Product/detail/:id", Page: ProductDetail },
   { path: "/Cart", Page: Carts },
   { path: "/Cart/Payment", Page: Payment },
+  { path: "/User/:id", Page: InfoUser },
 ];
 
 export {publicRouters}

@@ -8,7 +8,7 @@ import { truncateString } from "../../FuncTions";
 import Messenger from "../../components/Messenger";
 
 import { useNavigate } from "react-router-dom";
-import { useState, useContext, useEffect, useMemo } from "react";
+import { useState, useContext, useEffect, useMemo, memo } from "react";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment } from "react";
@@ -159,7 +159,8 @@ function ActionCart() {
     </div>
   );
 }
-function ActionPay() {
+const ActionPay = memo(() => {
+  console.log("returning ActionPay");
   const { myCarts, isLogin } = useContext(Context);
   const navigate = useNavigate();
   const SumMoneyCart = useMemo(() => {
@@ -204,7 +205,7 @@ function ActionPay() {
       </div>
     </div>
   );
-}
+});
 function Carts() {
   const { myCarts } = useContext(Context);
   return (
@@ -227,4 +228,4 @@ function Carts() {
   );
 }
 
-export default Carts;
+export default memo(Carts);

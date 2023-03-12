@@ -4,22 +4,29 @@ import axios from "axios";
 import { setSecttion } from "../../Storage";
 import { Context } from "../../Context";
 import Button from "../../components/Button";
-import { addCommas, truncateString } from "../../FuncTions";
+import {
+  addCommas,
+  truncateString,
+  removeVietnameseTones,
+} from "../../FuncTions";
 import InputG from "../../components/GloboInput";
 import { Navigate, useNavigate } from "react-router";
 import Messenger from "../../components/Messenger";
 import Loading from "../../components/Load";
+import { debounce } from "lodash";
+import Fuse from "fuse.js";
 import clsx from "clsx";
 function Title({ children }) {
   return <h1 className={styles.TitleClass}>{children}</h1>;
 }
-function ListAdress({ dataAddress, ClickItemDiachi }) {
+function ListAdress({ dataAddress, ClickItemDiachi, setInputSearch }) {
   return (
     <ul className={styles.boxDataTinhThanh}>
       {dataAddress.map((item) => (
         <li
           onClick={() => {
             ClickItemDiachi(item.name, item.code);
+            setInputSearch(false);
           }}
           key={item.code}
         >
@@ -45,8 +52,12 @@ function InfoPay({ ValueInput, setValueInput, IsValue, setIsValue }) {
   });
   const [HienDataDiachi, setHienDataDiachi] = useState(T);
   const [isFormDiachi, setIsFormDiachi] = useState(false);
-  console.log(isFormDiachi)
+  const [isFormTK, setIsFormTK] = useState(false);
+  const [isInputSearch, setInputSearch] = useState(false);
+  const [ValueInputSearch, setValueInputSearch] = useState("");
+  const [dataSearch, setDataSearch] = useState([]);
   const DomBtn = useRef({});
+
   const ListbtnTinhThanh = ["Tỉnh/Thành Phố", "Quận/Huyện", "Phường/Xã"];
   const DataDiaChi =
     HienDataDiachi === T
@@ -59,16 +70,137 @@ function InfoPay({ ValueInput, setValueInput, IsValue, setIsValue }) {
     width: dataOffset.offsetWidth,
     left: dataOffset.offsetLeft,
   };
+
+  const domBoxAddress = useRef();
   useEffect(() => {
     if (tinh.trim() !== "" && quan.trim() !== "" && phuong.trim() !== "") {
       setIsValue((prevIs) => ({ ...prevIs, TinhThanh: false }));
     }
   }, [phuong]);
+
+  useEffect(() => {
+    axios
+      .get("https://provinces.open-api.vn/api/p/")
+      .then(({ data }) => {
+        setDataTinhThanh(data);
+      })
+      .catch((err) => alert(err));
+  }, []);
+  useEffect(() => {
+    axios
+      .get("https://provinces.open-api.vn/api/d/")
+      .then(({ data }) => {
+        setDataQuan(data);
+      })
+      .catch((err) => alert(err));
+  }, []);
+  useEffect(() => {
+    axios
+      .get("https://provinces.open-api.vn/api/w/")
+      .then(({ data }) => {
+        setDataPhuong(data);
+      })
+      .catch((err) => alert(err));
+  }, []);
+  useEffect(() => {
+    document.addEventListener("mousedown", HandlerClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", HandlerClickOutside);
+    };
+  }, []);
+
+  const dataDiaChiConCat = useMemo(() => {
+    console.log("ko dc render cai nay nhieu lan");
+    return dataPhuong.map((item) => {
+      let dataQuanFilter1 = GetDataTuCapConLenCapCha(
+        item.district_code,
+        dataQuan
+      );
+      let dataTinhFilter1 = GetDataTuCapConLenCapCha(
+        dataQuanFilter1.province_code,
+        dataTinhThanh
+      );
+      return {
+        dataT: { nameT: dataTinhFilter1.name, idT: dataTinhFilter1.code },
+        dataQ: { nameQ: dataQuanFilter1.name, idQ: dataQuanFilter1.code },
+        dataP: { nameP: item.name, idP: item.code },
+        name: `${dataTinhFilter1.name} ${dataQuanFilter1.name} ${item.name}`,
+      };
+    });
+  }, [dataPhuong]);
+
+  const HandlerTimKiem = debounce((e) => {
+    if (e.target.value.trim().length > 0) {
+      setIsFormDiachi(false);
+      setIsFormTK(true);
+    } else {
+      setIsFormDiachi(true);
+      setIsFormTK(false);
+    }
+    const keyword = e.target.value;
+    const isdataPhuongNull = IsDataSeacrhTQHnull(dataPhuong, keyword);
+    const isdataQuanNull = IsDataSeacrhTQHnull(dataQuan, keyword);
+    const isdataTinhNull = IsDataSeacrhTQHnull(dataTinhThanh, keyword);
+
+    console.log("T", isdataTinhNull);
+    console.log("Q", isdataQuanNull);
+    console.log("H", isdataPhuongNull);
+
+    let dataConCat = [];
+    // gop huyen quan co cung
+    if (!isdataPhuongNull) {
+      dataConCat = dataSearchDiaChi(dataPhuong, keyword).map((item) => {
+        let dataQuanFilter1 = GetDataTuCapConLenCapCha(
+          item.district_code,
+          dataQuan
+        );
+        let dataTinhFilter1 = GetDataTuCapConLenCapCha(
+          dataQuanFilter1.province_code,
+          dataTinhThanh
+        );
+        return {
+          dataP: { nameP: item.name, idP: item.code },
+          dataQ: { nameQ: dataQuanFilter1.name, idQ: dataQuanFilter1.code },
+          dataT: { nameT: dataTinhFilter1.name, idT: dataTinhFilter1.code },
+        };
+      });
+    } else if (!isdataQuanNull) {
+      dataConCat = dataSearchDiaChi(dataQuan, keyword).map((item) => {
+        let dataTinhFilter1 = GetDataTuCapConLenCapCha(
+          item.province_code,
+          dataTinhThanh
+        );
+        return {
+          dataP: false,
+          dataQ: { nameQ: item.name, idQ: item.code },
+          dataT: { nameT: dataTinhFilter1.name, idT: dataTinhFilter1.code },
+        };
+      });
+    } else if (!isdataTinhNull) {
+      dataConCat = dataSearchDiaChi(dataTinhThanh, keyword).map((item) => {
+        return {
+          dataP: false,
+          dataQ: false,
+          dataT: { nameT: item.name, idT: item.code },
+        };
+      });
+    } else {
+      dataConCat = dataSearchDiaChi(dataDiaChiConCat, keyword);
+    }
+
+    setValueInputSearch(keyword);
+
+    setDataSearch(dataConCat);
+  }, 500);
+
+  console.log("da ta tim kiem", dataSearch);
+
   const HandlerOnChange = (e) => {
     const { value, name } = e.target;
 
     setValueInput((prevValue) => ({ ...prevValue, [name]: value }));
-   
+
     if (value.trim() == "") {
       setIsValue((prevIs) => ({
         ...prevIs,
@@ -104,36 +236,20 @@ function InfoPay({ ValueInput, setValueInput, IsValue, setIsValue }) {
       });
     }
   };
-  useEffect(() => {
-    axios
-      .get("https://provinces.open-api.vn/api/p/")
-      .then(({ data }) => {
-        setDataTinhThanh(data);
-      })
-      .catch((err) => alert(err));
-  }, []);
-  useEffect(() => {
-    axios
-      .get("https://provinces.open-api.vn/api/d/")
-      .then(({ data }) => {
-        setDataQuan(data);
-      })
-      .catch((err) => alert(err));
-  }, []);
-  useEffect(() => {
-    axios
-      .get("https://provinces.open-api.vn/api/w/")
-      .then(({ data }) => {
-        setDataPhuong(data);
-      })
-      .catch((err) => alert(err));
-  }, []);
+  const HandlerClickOutside = (e) => {
+    if (domBoxAddress.current && !domBoxAddress.current.contains(e.target)) {
+      setIsFormDiachi(false);
+      setInputSearch(false);
+      setIsFormTK(false);
+    }
+  };
   function DomOffsets(btn) {
     return {
       offsetWidth: DomBtn.current[btn].offsetWidth + "px",
       offsetLeft: DomBtn.current[btn].offsetLeft + "px",
     };
   }
+
   const ClickItemDiachi = (name, id) => {
     if (HienDataDiachi === T) {
       if (quan.trim !== "") {
@@ -190,6 +306,69 @@ function InfoPay({ ValueInput, setValueInput, IsValue, setIsValue }) {
     return dataPhuong.filter((item) => item.district_code == id);
   }
 
+  function GetDataTuCapConLenCapCha(id, dataParent) {
+    return dataParent.find((item) => item.code === id);
+  }
+
+  function IsDataSeacrhTQHnull(dataIsKt, keyword) {
+    return !dataIsKt.some(
+      (item) =>
+        removeVietnameseTones(item.name)
+          .replace(/\s+/g, "")
+          .indexOf(removeVietnameseTones(keyword).replace(/\s+/g, "")) !== -1
+    );
+  }
+
+  function ClickInputTinhThanh() {
+    setIsFormDiachi(true);
+    setInputSearch(true);
+  }
+
+  function dataSearchDiaChi(dataSearch, keyword) {
+    return dataSearch.filter((value) => {
+      return (
+        removeVietnameseTones(value.name)
+          .replace(/\s+/g, "")
+          .indexOf(removeVietnameseTones(keyword).replace(/\s+/g, "")) !== -1
+      );
+    });
+  }
+  const startSetDataOffsetStyles = debounce((btn) => {
+    setDataOffset({
+      offsetWidth: DomOffsets(btn).offsetWidth,
+      offsetLeft: DomOffsets(btn).offsetLeft,
+    });
+  }, 1);
+  function HandlerClikItemTK({ dataP, dataQ, dataT }) {
+    setIsFormDiachi(true);
+    setInputSearch(false);
+    setIsFormTK(false);
+    setValueInput((p) => ({
+      ...p,
+      TinhThanh: {
+        tinh: `${dataT ? `${dataT.nameT}` : ""}`,
+        quan: `${dataQ ? `, ${dataQ.nameQ}` : ""}`,
+        phuong: `${dataP ? `, ${dataP.nameP}` : ""}`,
+      },
+    }));
+
+    if (dataP === false && dataQ === false && dataT !== false) {
+      setDataQuanFilter(GetQuan(dataT.idT));
+      setHienDataDiachi(Q);
+      setBtnActive(1);
+      startSetDataOffsetStyles("btn1");
+    } else if (dataP === false && dataQ !== false && dataT !== false) {
+      setDataQuanFilter(GetQuan(dataT.idT));
+      setDataPhuongFilter(GetPhuong(dataQ.idQ));
+      setHienDataDiachi(P);
+      setBtnActive(2);
+      startSetDataOffsetStyles("btn2");
+    } else {
+      setDataQuanFilter(GetQuan(dataT.idT));
+      setDataPhuongFilter(GetPhuong(dataQ.idQ));
+      setIsFormDiachi(false);
+    }
+  }
   return (
     <div className={styles.InfoPay}>
       <Title>THÔNG TIN ĐƠN HÀNG</Title>
@@ -211,10 +390,11 @@ function InfoPay({ ValueInput, setValueInput, IsValue, setIsValue }) {
           HandlerOnChange(e);
         }}
       />
-      <div className={styles.boxTinhThanh}>
+      <div className={styles.boxTinhThanh} ref={domBoxAddress}>
         <InputG
-          onClick={() => setIsFormDiachi(true)}
-          placeholder="Tỉnh thành phố"
+          readOnly
+          onClick={ClickInputTinhThanh}
+          placeholder="Tỉnh thành, quận huyện, phường xã"
           error={IsValue.TinhThanh}
           value={`${tinh}${quan}${phuong}`}
           name={"TinhThanh"}
@@ -222,6 +402,15 @@ function InfoPay({ ValueInput, setValueInput, IsValue, setIsValue }) {
             HandlerOnChange(e);
           }}
         />
+        {isInputSearch && (
+          <input
+            onChange={(e) => {
+              HandlerTimKiem(e);
+            }}
+            className={styles.SearchTinhThanh}
+            placeholder="tim kiem"
+          ></input>
+        )}
         {isFormDiachi && (
           <div className={styles.boxKhuVuc}>
             <div className={styles.BtnS}>
@@ -246,8 +435,24 @@ function InfoPay({ ValueInput, setValueInput, IsValue, setIsValue }) {
             <ListAdress
               dataAddress={DataDiaChi}
               ClickItemDiachi={ClickItemDiachi}
+              setInputSearch={setInputSearch}
             />
           </div>
+        )}
+        {isFormTK && (
+          <ul className={styles.FormTk}>
+            {dataSearch.length > 0 ? (
+              dataSearch.map((item, index) => (
+                <li key={index} onClick={() => HandlerClikItemTK(item)}>{`${
+                  item.dataT ? `${item.dataT.nameT}` : ""
+                } ${item.dataQ ? `, ${item.dataQ.nameQ}` : ""}  ${
+                  item.dataP ? `, ${item.dataP.nameP}` : ""
+                }`}</li>
+              ))
+            ) : (
+              <h1>Không có kết quả muốn tìm kiếm !</h1>
+            )}
+          </ul>
         )}
       </div>
       <InputG
@@ -362,7 +567,6 @@ function Payment() {
       return item.trim() !== "";
     }
   });
-
   const SumMoney = useMemo(() => {
     return myCarts.reduce((ltru, item) => {
       const sum = ltru + item.Price;

@@ -5,19 +5,20 @@ import { setSecttion } from "../../Storage";
 
 import { NoSearch } from "../../components/NoResult";
 import { Context } from "../../Context";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import clsx from "clsx";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, memo } from "react";
 import axios from "axios";
 
-function Slider() {
+
+const Slider = memo(() => {
+  console.log("render Slider");
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const images = [
     { id: 1, src: "img/imgBia/img3.jpg", alt: "Image 1" },
     { id: 2, src: "img/imgBia/img1.jpg", alt: "Image 2" },
     { id: 3, src: "img/imgBia/img2.jpg", alt: "Image 3" },
-
   ];
 
   const handleClickNext = () => {
@@ -67,7 +68,7 @@ function Slider() {
       </div>
     </div>
   );
-}
+});
 function Title({ children }) {
   return (
     <div className={styles.Title}>
@@ -79,8 +80,8 @@ function Title({ children }) {
 function ProductNew() {
   const [dataProduct, setDataProduct] = useState([]);
   const [dataProductTK, setDataProductTK] = useState([]);
-  const { keyword, isLogin, setMyCarts,myCarts } = useContext(Context);
-  const navigate = useNavigate()
+  const { keyword, isLogin, setMyCarts, myCarts } = useContext(Context);
+  const navigate = useNavigate();
   function Search() {
     const results = dataProduct.filter((product) =>
       product.TEN_SP.replace(/\s+/g, "")
@@ -107,59 +108,55 @@ function ProductNew() {
   }, []);
 
   async function AddCart(idSp) {
-      try {
-        const { data } = await axios.get(
-          `http://localhost/backendBanQuanAo/Size/resFullSize.php?id=${idSp}`
+    try {
+      const { data } = await axios.get(
+        `http://localhost/backendBanQuanAo/Size/resFullSize.php?id=${idSp}`
+      );
+      const { success, result } = data;
+      const arrproductDetail = dataProduct.filter((item) => item.MA_SP == idSp);
+      const productDetail = { ...arrproductDetail[0] };
+      console.log(productDetail);
+      if (success) {
+        console.log(myCarts);
+        const CheckMatchSp = myCarts.some(
+          (item) => item.MA_SIZE == result[0].MA_SIZE && item.MA_SP == idSp
         );
-        const { success, result } = data;
-        const arrproductDetail = dataProduct.filter(
-          (item) => item.MA_SP == idSp
-        );
-        const productDetail = { ...arrproductDetail[0] };
-        console.log(productDetail);
-        if (success) {
-          console.log(myCarts);
-          const CheckMatchSp = myCarts.some(
-            (item) => item.MA_SIZE == result[0].MA_SIZE && item.MA_SP == idSp
-          );
-          console.log(CheckMatchSp); // true là them sl false là thêm mới
-          let newCarts = [];
-          setMyCarts((prevMyCarts) => {
-            if (CheckMatchSp) {
-              const copyeMyCarts1 = [...prevMyCarts];
-              copyeMyCarts1.forEach((element) => {
-                if (
-                  element.MA_SP === idSp &&
-                  element.MA_SIZE === result[0].MA_SIZE
-                ) {
-                  element.SL = element.SL + 1;
-                  element.Price = element.SL * parseInt(element.GIA_BAN);
-                  
-                }
-              });
-              newCarts = [...copyeMyCarts1];
-              console.log(copyeMyCarts1);
-            } else {
-              // add dữ liệu
-              const newProductDetail = { ...productDetail };
-              newProductDetail.MA_SIZE = result[0].MA_SIZE;
-              newProductDetail.TEN_SIZE = result[0].TEN_SIZE;
-              newProductDetail.SL = 1;
-              newProductDetail.Price = 1 * parseInt(productDetail.GIA_BAN);
-              //
-              newCarts = [...myCarts, newProductDetail];
-            }
-            //save data session
-            setSecttion("myCarts", newCarts);
-            return newCarts;
-          });
-        } else {
-          console.log("khong co data");
-        }
-      } catch (error) {
-        console.log("loi roi ", error);
+        console.log(CheckMatchSp); // true là them sl false là thêm mới
+        let newCarts = [];
+        setMyCarts((prevMyCarts) => {
+          if (CheckMatchSp) {
+            const copyeMyCarts1 = [...prevMyCarts];
+            copyeMyCarts1.forEach((element) => {
+              if (
+                element.MA_SP === idSp &&
+                element.MA_SIZE === result[0].MA_SIZE
+              ) {
+                element.SL = element.SL + 1;
+                element.Price = element.SL * parseInt(element.GIA_BAN);
+              }
+            });
+            newCarts = [...copyeMyCarts1];
+            console.log(copyeMyCarts1);
+          } else {
+            // add dữ liệu
+            const newProductDetail = { ...productDetail };
+            newProductDetail.MA_SIZE = result[0].MA_SIZE;
+            newProductDetail.TEN_SIZE = result[0].TEN_SIZE;
+            newProductDetail.SL = 1;
+            newProductDetail.Price = 1 * parseInt(productDetail.GIA_BAN);
+            //
+            newCarts = [...myCarts, newProductDetail];
+          }
+          //save data session
+          setSecttion("myCarts", newCarts);
+          return newCarts;
+        });
+      } else {
+        console.log("khong co data");
       }
-    
+    } catch (error) {
+      console.log("loi roi ", error);
+    }
   }
   function Prodcutnew({ src, name, price, id }) {
     return (
@@ -173,7 +170,7 @@ function ProductNew() {
           width="120px"
           height="35px"
           fontSize="15px"
-          onClick={()=>AddCart(id)}
+          onClick={() => AddCart(id)}
         >
           Thêm Vào Giỏ
         </Button>
@@ -203,6 +200,7 @@ function ProductNew() {
 }
 
 function Home() {
+  console.log("rendering");
   return (
     <div className={styles.wrapper}>
       <div className="grid wide">
@@ -213,4 +211,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default memo(Home);

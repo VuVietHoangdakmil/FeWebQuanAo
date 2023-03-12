@@ -12,7 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext,memo} from "react";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
 
@@ -20,7 +20,7 @@ function Allproduct() {
   const navigate = useNavigate();
   const [proDuctAll, setProDuctAll] = useState([]);
   const [searchProduct, setSearchProduct] = useState([]);
-  const { keyword, isLogin, myCarts, setMyCarts } = useContext(Context);
+  const { keyword, myCarts, setMyCarts } = useContext(Context);
   const [pageNumber, setPageNumber] = useState(0); // trang hiện tại đang đứng
 
   const itemsPerPage = 8; // số lượng tối đa hiển thị trên 1 trang

@@ -18,7 +18,7 @@ function ImgProduct({ src }) {
 
 function Action({ data }) {
   const navigate = useNavigate();
-  const { isLogin, setMyCarts, myCarts } = useContext(Context);
+  const {  setMyCarts, myCarts } = useContext(Context);
   const [SL, setSL] = useState(1);
   const { productDetail, valueRadio } = data;
 

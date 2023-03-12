@@ -19,5 +19,30 @@ const truncateString = (str, maxLength) => {
     return str;
   }
 };
+const removeVietnameseTones = (str) => {
+  // Chuyển chuỗi thành chữ thường
+  str = str.toLowerCase();
 
-export { addCommas, truncateString};
+  // Loại bỏ dấu từng ký tự trong chuỗi
+  const map = {
+    a: "áàảãạăắằẳẵặâấầẩẫậ",
+    d: "đ",
+    e: "éèẻẽẹêếềểễệ",
+    i: "íìỉĩị",
+    o: "óòỏõọôốồổỗộơớờởỡợ",
+    u: "úùủũụưứừửữự",
+    y: "ýỳỷỹỵ",
+  };
+
+  for (let key in map) {
+    str = str.replace(new RegExp(`[${map[key]}]`, "g"), key);
+  }
+
+  return str;
+};
+
+const isURL = (str) => {
+  const pattern = /^(ftp|http|https):\/\/[^ "]+$/;
+  return pattern.test(str);
+};
+export { addCommas, truncateString, removeVietnameseTones, isURL };
