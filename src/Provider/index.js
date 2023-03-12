@@ -45,18 +45,7 @@ function Provider({ children }) {
     });
   };
 
-  // useEffect(() => {
-  //   console.log("re-rendering...");
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       const { displayName, email, photoURL, uid } = user;
-  //       const data = { SDT: email, password: uid };
-
-  //     } else {
-  //       console.log("use no login");
-  //     }
-  //   });
-  // }, []);
+ 
 
   const LogOutGoogle = () => {
     signOut(auth)
