@@ -98,10 +98,18 @@ function FormDangNhap() {
         label={"Mật Khẩu"}
         placeholder={"Nhập Mật Khẩu"}
       />
-      <Button fontSize="18px" width="120px" height="40px">
+      <Button fontSize="18px" width="100%" height="40px">
         Đăng Nhập
       </Button>
-      <div onClick={LoginGG}> haongf gg</div>
+      <div className={styles.btnLoginWithEmail} onClick={LoginGG}>
+        <div className={styles.wrapperIcon}>
+          <img
+            class="google-icon"
+            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+          />
+        </div>
+        <span>Đăng Nhập Với Google</span>
+      </div>
     </form>
   );
 }
@@ -391,8 +399,12 @@ function ActionUser() {
         {isForm && (
           <div className={styles.menuSetting}>
             <ul>
-              <li>
-                <Link to="">Đơn Đã Đặt</Link>
+              <li
+                onClick={() => {
+                  setIsForm((p) => !p);
+                }}
+              >
+                <Link to="/User/Oder">Đơn Đã Đặt</Link>
               </li>
               <li
                 onClick={() => {

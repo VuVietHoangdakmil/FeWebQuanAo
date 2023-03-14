@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Context } from "../Context";
 import { getSecttion, setSecttion } from "../Storage";
 import {
@@ -16,6 +16,7 @@ function Provider({ children }) {
   const [myCarts, setMyCarts] = useState(getSecttion("myCarts") ?? []);
   const [infoUser, setInfoUser] = useState(getSecttion("infoUser") ?? {});
   const [keyword, setKeyword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const CallApiLogin = (data) => {
     const { SDT, password } = data;
     axios
@@ -42,11 +43,18 @@ function Provider({ children }) {
       const data = { SDT: email, password: uid };
       CallApiAddUser(displayName, uid, email, photoURL);
       CallApiLogin(data);
+      // setIsLoading(true);
     });
   };
-
- 
-
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       setIsLoading(false);
+  //     } else {
+  //       console.log("use no login");
+  //     }
+  //   });
+  // }, []);
   const LogOutGoogle = () => {
     signOut(auth)
       .then(() => {

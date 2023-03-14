@@ -1,0 +1,135 @@
+.wrapper{
+    min-height: 500px;
+    margin-top: 100px;
+}
+.ItemDonHang{
+  
+   background-color: whitesmoke;
+   margin: 5px 5px;
+   border-radius: 5px;
+    display: block;
+    padding: 0px 10px 0px 10px;
+    li {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        flex-wrap: wrap;
+        .Content{
+          font-size: 20px;
+          color: black;
+        }
+        .icon{
+           font-size: 20px;
+        color: rgb(49, 173, 240)
+        }
+        .boxIcon{
+           width: 40px;
+          
+        }
+    }
+    
+}
+.IconCheckPay{
+    color: green;
+    font-size: 30px;
+    padding: 5px;
+    border: 2px solid green;
+    border-radius: 50%;
+}
+.ConTentPay{
+    font-size: 20px;
+    color: green;
+margin-bottom: 8px;
+}
+.IconNoCheckPay {
+    color:orangered;
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 5px;
+    border: 2px solid orangered;
+    border-radius: 50%;
+}
+
+.ConTentNoPay {
+    font-size: 20px;
+    color:orangered;
+margin-bottom: 8px;
+
+    
+}
+
+.boxTrangThai
+{
+display: flex;
+    flex-direction: column-reverse;
+    
+}
+.CusTomColItem{
+    position: relative;
+    
+}
+.btnHoverAddress{
+    position: relative;
+    cursor: pointer;
+    &:hover > .wrapperTrangThai{
+        display: block;
+    }
+}
+.btnHoverTrangThai{
+    position: absolute;
+    color: var(--color_red);
+    top: 13px;
+    right: 13px;
+    cursor: pointer;
+
+    &:hover{
+        filter: brightness(150%);
+    }
+    
+}
+
+.ColorRed{
+    color: red;
+}
+.ColorYellow{
+    color: rgb(141, 141, 53);
+}
+.ColorGreen{
+    color: green;
+}
+.wrapperTrangThai{
+    position: absolute;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 30px rgb(164, 162, 162);
+    display: none;
+    width: 100%;
+    top: 0;
+    padding: 5px;
+}
+.ContenFullMail{
+    position: absolute;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 5px 5px 30px rgb(164, 162, 162);
+        display: none;
+        width: 100%;
+        top: 0;
+        padding: 5px;
+}
+.btnHoverEmail{
+    cursor: pointer;
+    position: relative;
+    &:hover > .ContenFullMail{
+        display: block;
+    }
+}
+.wrapperLeft{
+    background-color: antiquewhite;
+    min-height: 500px;
+    margin-top: 5px;
+    margin-right: 20px;
+    border-radius: 6px;
+}

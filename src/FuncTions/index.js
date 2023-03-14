@@ -40,9 +40,30 @@ const removeVietnameseTones = (str) => {
 
   return str;
 };
+const GetDate = (data) => {
+  const d = new Date(data);
+  const Datec = d.getDate() >= 10 ? d.getDate() : `0${d.getDate()}`;
+  const Monthc =
+    d.getMonth() + 1 >= 10 ? d.getDate() + 1 : `0${d.getMonth() + 1}`;
+  return `${Datec}-${Monthc}-${d.getFullYear()}`;
+};
+
+const GetTime = (data) => {
+  const d = new Date(data);
+  const Hours = d.getHours() >= 10 ? d.getHours() : `0${d.getHours()}`;
+  const Minutes = d.getMinutes() >= 10 ? d.getMinutes() : `0${d.getMinutes()}`;
+  return `${Hours}:${Minutes}`;
+};
 
 const isURL = (str) => {
   const pattern = /^(ftp|http|https):\/\/[^ "]+$/;
   return pattern.test(str);
 };
-export { addCommas, truncateString, removeVietnameseTones, isURL };
+export {
+  addCommas,
+  truncateString,
+  removeVietnameseTones,
+  isURL,
+  GetDate,
+  GetTime,
+};

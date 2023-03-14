@@ -1,8 +1,9 @@
 import './Load.scss';
 
-function Load() {
+function Load({styles}) {
+  
     return (
-      <div className="loader">
+      <div className="loader" style={styles}>
         <div className="loaderchild">
           <div className="okok">
             <div className="square"></div>

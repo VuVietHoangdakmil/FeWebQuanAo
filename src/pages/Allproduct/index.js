@@ -4,6 +4,7 @@ import { Context } from "../../Context";
 import { NoSearch } from "../../components/NoResult";
 import Pagenumber from "../../components/Pagenumber";
 import { setSecttion } from "../../Storage";
+import Loading from "../../components/Load";
 
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
-import { useState, useEffect, useContext,memo} from "react";
+import { useState, useEffect, useContext, memo } from "react";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
 
@@ -22,7 +23,7 @@ function Allproduct() {
   const [searchProduct, setSearchProduct] = useState([]);
   const { keyword, myCarts, setMyCarts } = useContext(Context);
   const [pageNumber, setPageNumber] = useState(0); // trang hiện tại đang đứng
-
+  const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = 8; // số lượng tối đa hiển thị trên 1 trang
   let dataProduct = keyword.length <= 0 ? proDuctAll : searchProduct;
 
@@ -55,6 +56,7 @@ function Allproduct() {
         const { success, result, message } = data;
         if (success) {
           setProDuctAll(result);
+          setIsLoading(false);
         } else {
           console.log("sai");
         }
@@ -118,40 +120,44 @@ function Allproduct() {
   }
   return (
     <div className={styles.wrapper}>
-      <div className="grid wide">
-        <h1 className={styles.title}>Tất cả sản phẩm</h1>
-        <div className={clsx("row", styles.cusTomRow)}>
-          {slicedData.map((item) => (
-            <div className="col l-3" key={item.MA_SP}>
-              <Product
-                herf={`/Product/detail/${item.MA_SP}`}
-                src={`/img/imgProduct/${item.HINH_SP}`}
-                name={item.TEN_SP}
-                price={item.GIA_BAN}
-                onClick={() => {
-                  AddCart(item.MA_SP);
-                }}
-              />
-            </div>
-          ))}
-        </div>
-        <ReactPaginate
-          previousLabel={<FontAwesomeIcon icon={faChevronLeft} />}
-          nextLabel={<FontAwesomeIcon icon={faChevronRight} />}
-          breakLabel={"..."}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
-          containerClassName={"pagination"}
-          activeClassName={"active"}
-        />
-        <Pagenumber pageNumber={pageCount} pageActive={pageNumber + 1} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="grid wide">
+          <h1 className={styles.title}>Tất cả sản phẩm</h1>
+          <div className={clsx("row", styles.cusTomRow)}>
+            {slicedData.map((item) => (
+              <div className="col l-3" key={item.MA_SP}>
+                <Product
+                  herf={`/Product/detail/${item.MA_SP}`}
+                  src={`/img/imgProduct/${item.HINH_SP}`}
+                  name={item.TEN_SP}
+                  price={item.GIA_BAN}
+                  onClick={() => {
+                    AddCart(item.MA_SP);
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+          <ReactPaginate
+            previousLabel={<FontAwesomeIcon icon={faChevronLeft} />}
+            nextLabel={<FontAwesomeIcon icon={faChevronRight} />}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination"}
+            activeClassName={"active"}
+          />
+          <Pagenumber pageNumber={pageCount} pageActive={pageNumber + 1} />
 
-        {slicedData.length <= 0 && (
-          <NoSearch>Không có kết quả cần tìm kiếm</NoSearch>
-        )}
-      </div>
+          {slicedData.length <= 0 && (
+            <NoSearch>Không có kết quả cần tìm kiếm</NoSearch>
+          )}
+        </div>
+      )}
     </div>
   );
 }
