@@ -1,4 +1,9 @@
 .NoSearch{
+    position: relative;
+    left:50%;
     font-size: 40px;
+    top: 50px;
+    transform: translateX(-50%);
     text-align: center;
+    color: crimson;
 }

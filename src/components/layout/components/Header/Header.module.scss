@@ -1,267 +1,354 @@
-.wrapper{
-    background-color: var(--main_clolor);
-    height: 80px;
-    
+.wrapper {
+  background-color: var(--main_clolor);
+  height: 80px;
+  width: 100%;
 }
-.DangKyAndDangNhap{
-    display:  flex;
-    align-items: center;
-   cursor: pointer;
+.DangKyAndDangNhap {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
 
-    button{
-        color: white;
-        font-size: 18px;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-    }
-    div{
-        background-color: white;
-        margin:  0 6px;
-        transform: rotate(50deg);
-        width: 1.5px;
-        transform: rotate(18deg);
-        height: 15px;
-    }
-    
-    .Dangky:hover{
-        opacity: 0.5;
-    }
-    .DangNhap:hover{
-        opacity: 0.5;
-    }
-}
-#rowHeader{
-    display: flex;
-    align-items: center;
-    height: 100%;
-    justify-content: space-between;
-    .LogoWeb{
-        color: white;
-        font-size: 40px;
-    }
-    .Action{
-        color: aliceblue;
-        display: flex;
-        align-items: center;
-    }
-}
-.ActionUser{
-    display: flex;
-    align-items: center;
-
-    img{
-         border-radius: 50%;
-        margin-right: 10px;
-        width: 40px;
-        height: 40px;
-        
-    }
-    .nameUser{
-        color: aliceblue;
-        font-size: 18px;
-        margin-right: 10px;
-    }
-}
-.dropSeting{
+  button {
     color: white;
-    font-size: 20px;
+    font-size: 18px;
+    background-color: transparent;
+    border: none;
     cursor: pointer;
-    position: relative;
-    z-index:1001;
-    
-}
-.iconSetting{
-    transform: rotate(180deg);
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    
-}
-.iconSetting.active{
-    transform: rotate(0deg);
-}
-.menuSetting{
-    position: absolute;
-    top: 229%;
-    background-color:var(--form_color);
-    min-width: 227px;
-    right: -151px;
-    animation: slow linear 0.2s;
-    box-shadow: 2px 13px 20px rgb(143, 142, 142);
-    border-radius: 4px;
-    ul{
-        padding: 10px;
-        cursor: auto;
-    }
+  }
+  div {
+    background-color: white;
+    margin: 0 6px;
+    transform: rotate(50deg);
+    width: 1.5px;
+    transform: rotate(18deg);
+    height: 15px;
+  }
 
-    li{
-        margin: 16px;
-        color:  var(--textTitle_color);
-        cursor: pointer;
-        &:first-child{
-            margin-top: 0;
-        }
-        &:last-child{
-            margin-bottom: 0;
-        }
-        &:hover{
-            opacity: 0.6;
-        }
+  .Dangky:hover {
+    opacity: 0.5;
+  }
+  .DangNhap:hover {
+    opacity: 0.5;
+  }
+}
+.customGird {
+  height: 100%;
+}
+.rowHeader {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: space-between;
+  .LogoWeb {
+    color: white;
+    font-size: 40px;
+  }
+  .Action {
+   
+    color: aliceblue;
+    display: flex;
+    align-items: center;
+  }
+}
+.ActionUser {
+  // display: flex;
+  // align-items: center;
+
+  img {
+    border-radius: 50%;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+  }
+  .nameUser {
+    color: aliceblue;
+    font-size: 18px;
+    margin-right: 10px;
+  }
+}
+
+.dropSeting {
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1001;
+}
+.iconSetting {
+  transform: rotate(180deg);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.iconSetting.active {
+  transform: rotate(0deg);
+}
+.menuSetting {
+  position: absolute;
+  top: 229%;
+  background-color: var(--form_color);
+  min-width: 227px;
+  right: -151px;
+  animation: slow linear 0.2s;
+  box-shadow: 2px 13px 20px rgb(143, 142, 142);
+  border-radius: 4px;
+  ul {
+    padding: 10px;
+    cursor: auto;
+  }
+
+  li {
+    margin: 16px;
+    color: var(--textTitle_color);
+    cursor: pointer;
+    &:first-child {
+      margin-top: 0;
     }
-    a{
-        color:  var(--textTitle_color);
+    &:last-child {
+      margin-bottom: 0;
     }
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+  a {
+    color: var(--textTitle_color);
+  }
 }
 @keyframes slow {
-    0%{
-        opacity: 0.2;
-    }
-    50%{
-        opacity: 0.5;
-    }
-    100%{
-        opacity: 1;
-    }
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
-.formpopup{
-    background-color: white;
-    min-height: 369px;
-    width: 800px;
-    margin: 0 auto;
-    margin-top: 100px;
-    display: flex;
-    animation: topToBottom 0.4s ease-in-out;
+.formpopup {
+  background-color: white;
+  min-height: 369px;
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 100px;
+  display: flex;
+  animation: topToBottom 0.4s ease-in-out;
 }
-@keyframes topToBottom{
-    from{
-        transform: translateY(-40px);
-        opacity: 0.5;
-    }
-    to{
-        transform: translateY(0px);
-        opacity: 1;
-    }
+@keyframes topToBottom {
+  from {
+    transform: translateY(-40px);
+    opacity: 0.5;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
 }
-.FormDangNhap{
-   width: 100%;
-    padding: 20px 25px;
+.FormDangNhap {
+  width: 100%;
+  padding: 20px 25px;
+ 
 
-    h1{
-        text-align: center;
-        font-size: 25px;
-        color: var(--textTitle_color);
-    }
+  h1 {
+    text-align: center;
+    font-size: 25px;
+    color: var(--textTitle_color);
+  }
 }
-.search{
-    position: relative;
-    margin-right: 25px;
-    padding: 5px;
+.search {
+  position: relative;
+  margin-right: 25px;
+  padding: 5px;
+  font-size: 20px;
+  z-index: 2000;
+  cursor: pointer;
+  &:hover > form {
+    display: block;
+  }
+
+  form {
+    position: absolute;
+    top: 41px;
+    right: -29px;
+    box-shadow: 10px 10px 20px rgb(80, 78, 78);
+    border-radius: 5px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+    .box {
+      display: flex;
+      align-items: center;
+      background-color: var(--input_color);
+      margin: 20px 20px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: -4px;
+      right: 32px;
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      clip-path: polygon(0 0, 100% 0, 100% 100%);
+      transform: rotate(-45deg);
+    }
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: -21px;
+      right: 0;
+      width: 100%;
+      height: 40px;
+      background-color: transparent;
+    }
+  }
+  input {
+    height: 35px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    padding-left: 10px;
+  }
+  button {
+    height: 35px;
+    width: 35px;
+    border: transparent;
+    background-color: transparent;
+    color: var(--color_red);
     font-size: 20px;
     cursor: pointer;
-    &:hover > form{
-        display: block;
+  }
+}
+
+.Cart {
+  color: white;
+  position: relative;
+  cursor: pointer;
+  div {
+    position: absolute;
+    top: 18px;
+  }
+}
+.btnLoginWithEmail {
+  background-color: rgb(107, 173, 231);
+  border-radius: 5px;
+  height: 40px;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  justify-content: center;
+  .wrapperIcon {
+    width: 38px;
+    height: 38px;
+    overflow: hidden;
+    margin-left: 2px;
+    border-radius: 5px;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+  }
+  span {
+    color: white;
+    font-size: 20px;
+    margin-left: 20px;
+  }
+  &:hover {
+    opacity: 0.6;
+  }
+}
+.BoxUserIcon {
+    position: relative;
+    z-index: 1000;
+    .iconUser {
+        font-size: 20px;
+        color: white;
+        cursor: pointer;
     }
+
+    // &:hover > .BoxDKYDN{
+    //     display: block;
+    // }
+}
+.BoxDKYDN{
+   position: absolute;
+   background-color: white;
    
-    form{
-        position: absolute;
-        top: 41px;
-        right: -29px;
-        box-shadow: 10px 10px 20px rgb(80, 78, 78);
-        border-radius: 5px;
-        background-color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        display: none;
-        .box{
-            display: flex;
-            align-items: center;
-            background-color: var(--input_color);
-            margin: 20px 20px;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        &::after{
-            content: "";
-            display: block;
-            position: absolute;
-            top: -4px;
-            right: 32px;
-            width: 20px;
-            height: 20px;
-            background-color: white;
-            clip-path: polygon(0 0, 100% 0, 100% 100%);
-            transform: rotate(-45deg);
-        }
-        &::before{
-            content: "";
-            display: block;
-            position: absolute;
-            top: -21px;
-            right: 0;
-            width: 100%;
-            height: 40px;
-            background-color: transparent;
-        }
+   width: 100px;
+   border-radius: 10px;
+   left: -31px;
+    top: 29px;
+    box-shadow: 5px 5px 25px rgb(180, 176, 176);
+    animation: animation1 0.5s ease-out;
+  
+    &.active{
+      animation: animation2 0.5s ease-out;
     }
-    input{
-        height: 35px;
-        border: none;
-        background-color: transparent;
-        outline: none;
-        padding-left: 10px;
+.DangKyAndDangNhap{
+
+display: flex;
+
+    flex-direction: column;
+    .gach{
+        display: none;
     }
     button{
-        height: 35px;
-        width: 35px;
-        border: transparent;
-        background-color: transparent;
-        color: var(--color_red);
-        font-size: 20px;
-        cursor: pointer;
+        color: black;
+        font-size: 14px;
+        
+        padding: 10px 5px;
+        
+        &:hover{
+            color: var(--color_red);
+        }
     }
 }
 
-.Cart{
-    color: white;
-    position: relative;
-    cursor: pointer;
-    div{
-        position: absolute;
-        top: 18px;
-       
+
+@keyframes animation1 {
+    from{
+      transform: scale(0);
+      opacity: 0.5;
+    }
+    to{
+      opacity: 1;
+      transform: scale(1);
     }
 }
-.btnLoginWithEmail{
-    background-color: rgb(107, 173, 231);
-    border-radius: 5px;
-    height: 40px;
-    margin-top: 30px;
-    display: flex;
-   align-items: center;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    justify-content: center;
-    .wrapperIcon{
-        width: 38px;
-        height: 38px;
-        overflow: hidden;
-        margin-left: 2px;
-        border-radius: 5px;
+@keyframes animation2 {
+  from {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+}
+@media (max-width: 415px) {
+  .rowHeader {
+    justify-content: space-evenly;
+  }
+  .rowHeader {
+
+    .LogoWeb {
+      font-size: 20px;
+     
     }
-    img{
-        width: 100%;
-        height: 100%;
-        background-color: white;
-       
-    }
-    span{
-        color: white;
-        font-size: 20px;
-        margin-left: 20px;
-    }
-    &:hover{
-        opacity: 0.6;
-    }
+  }
+
+ 
 }

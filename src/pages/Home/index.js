@@ -33,6 +33,7 @@ const Slider = memo(() => {
   };
 
   return (
+
     <div className={styles.slider}>
       <button className={styles.prev} onClick={handleClickPrev}>
         &#10094;
@@ -184,7 +185,7 @@ function ProductNew() {
       <Title>Sản Phẩm Mới</Title>
       <div className={clsx("row", styles.cutstomRow)}>
         {dataProductall.map((item) => (
-          <div key={item.MA_SP} className="col l-3">
+          <div key={item.MA_SP} className="col l-3 c-12">
             <Prodcutnew
               id={item.MA_SP}
               src={`/img/imgProduct/${item.HINH_SP}`}
@@ -204,7 +205,11 @@ function Home() {
   return (
     <div className={styles.wrapper}>
       <div className="grid wide">
-        <Slider />
+        <div className="row ">
+          <div className="col l-12 m-12 c-12">
+            <Slider />
+          </div>
+        </div>
         <ProductNew />
       </div>
     </div>

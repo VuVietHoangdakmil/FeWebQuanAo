@@ -14,10 +14,11 @@ import { Navigate, useNavigate } from "react-router";
 import Messenger from "../../components/Messenger";
 import Loading from "../../components/Load";
 import { debounce } from "lodash";
-import Fuse from "fuse.js";
 import clsx from "clsx";
 function Title({ children }) {
-  return <h1 className={styles.TitleClass}>{children}</h1>;
+  return (
+    <h1 className={clsx(styles.TitleClass, styles.TitleClass2)}>{children}</h1>
+  );
 }
 function ListAdress({ dataAddress, ClickItemDiachi, setInputSearch }) {
   return (
@@ -53,6 +54,7 @@ function InfoPay({ ValueInput, setValueInput, IsValue, setIsValue }) {
   const [HienDataDiachi, setHienDataDiachi] = useState(T);
   const [isFormDiachi, setIsFormDiachi] = useState(false);
   const [isFormTK, setIsFormTK] = useState(false);
+  const [renderEff, setRenderEff] = useState(false);
   const [isInputSearch, setInputSearch] = useState(false);
   const [ValueInputSearch, setValueInputSearch] = useState("");
   const [dataSearch, setDataSearch] = useState([]);
@@ -71,6 +73,12 @@ function InfoPay({ ValueInput, setValueInput, IsValue, setIsValue }) {
     left: dataOffset.offsetLeft,
   };
 
+  useEffect(() => {
+    if (DomBtn.current.btn0) {
+      const width = DomBtn.current.btn0.offsetWidth;
+      setDataOffset((p) => ({ ...p, offsetWidth: `${width}px` }));
+    }
+  }, [renderEff]);
   const domBoxAddress = useRef();
   useEffect(() => {
     if (tinh.trim() !== "" && quan.trim() !== "" && phuong.trim() !== "") {
@@ -322,6 +330,7 @@ function InfoPay({ ValueInput, setValueInput, IsValue, setIsValue }) {
   function ClickInputTinhThanh() {
     setIsFormDiachi(true);
     setInputSearch(true);
+    setRenderEff(p=>!p);
   }
 
   function dataSearchDiaChi(dataSearch, keyword) {
@@ -429,7 +438,11 @@ function InfoPay({ ValueInput, setValueInput, IsValue, setIsValue }) {
                   {item}
                 </div>
               ))}
-              <div style={styleUnderline} className={styles.underline}></div>
+              <div
+                style={styleUnderline}
+                className={styles.underline}
+                
+              ></div>
             </div>
 
             <ListAdress
@@ -716,7 +729,7 @@ function Payment() {
                 id={styles.customok}
                 className="row"
               >
-                <div className="col l-7">
+                <div className="col l-7 c-12 m-7">
                   <InfoPay
                     IsValue={IsValue}
                     setIsValue={setIsValue}
@@ -724,7 +737,7 @@ function Payment() {
                     setValueInput={setValueInput}
                   />
                 </div>
-                <div className="col l-5">
+                <div className="col l-5 c-12 m-7">
                   <InfoBill SumMoney={SumMoney} myCarts={myCarts} />
                 </div>
               </form>

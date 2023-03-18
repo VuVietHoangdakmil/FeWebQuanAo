@@ -131,3 +131,41 @@
 .boxThanhtoan{
     margin-top: 25px;
 }
+.rowMB{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+   
+}
+.posisionMB{
+    position: relative;
+}
+@media (max-width: 415px){
+    #customNone{
+        display: none;
+    }
+    .cusTomCol2{
+        margin: 10px auto;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+      
+    }
+    
+    .ActionCart{
+        padding: 0;
+    }
+    .rowMB{
+        justify-content: center;
+
+    }
+    .btnUpdateMobie{
+        text-align: center;
+        margin-bottom: 50px;
+        
+    }
+    .cusTomMobieColAction{
+        padding: 0 5px;
+    }
+   
+}

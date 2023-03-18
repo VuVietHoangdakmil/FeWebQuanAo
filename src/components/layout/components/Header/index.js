@@ -1,9 +1,13 @@
 import styles from "./Header.module.scss";
-import { useState, useContext, useEffect, memo } from "react";
+import { useState, useContext, useEffect, memo, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSearch,
+  faCaretDown,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import clsx from "clsx";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -104,7 +108,7 @@ function FormDangNhap() {
       <div className={styles.btnLoginWithEmail} onClick={LoginGG}>
         <div className={styles.wrapperIcon}>
           <img
-            class="google-icon"
+            className="google-icon"
             src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
           />
         </div>
@@ -332,7 +336,7 @@ function DangKyAndDangNhap() {
         >
           Đăng Nhập
         </button>
-        <div></div>
+        <div className={styles.gach}></div>
         <button
           onClick={() => {
             ClickDangKy();
@@ -348,13 +352,15 @@ function DangKyAndDangNhap() {
             setBlockBlur(!isBlockBlur);
           }}
         >
-          <div
-            className={styles.formpopup}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            {isfrom ? <FormDangNhap /> : <FormDangKy />}
+          <div className="row">
+            <div
+              className={clsx(styles.formpopup, "col  c-10 l-6 m-8")}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              {isfrom ? <FormDangNhap /> : <FormDangKy />}
+            </div>
           </div>
         </BlockBlur>
       )}
@@ -385,38 +391,46 @@ function ActionUser() {
   }
   return (
     <div className={styles.ActionUser}>
-      <div className={styles.nameUser}>{infoUser.TEN_KH}</div>
-      <img src={img} alt="Example Image" />
-      <div className={styles.dropSeting}>
-        <div
-          onClick={() => {
-            handleTogger();
-          }}
-          className={clsx(styles.iconSetting, { [styles.active]: isForm })}
-        >
-          <FontAwesomeIcon icon={faCaretDown} />
+      <div className={clsx("row", styles.rowHeader)}>
+        <div className="col">
+          <div className={styles.nameUser}>{infoUser.TEN_KH}</div>
         </div>
-        {isForm && (
-          <div className={styles.menuSetting}>
-            <ul>
-              <li
-                onClick={() => {
-                  setIsForm((p) => !p);
-                }}
-              >
-                <Link to="/User/Oder">Đơn Đã Đặt</Link>
-              </li>
-              <li
-                onClick={() => {
-                  setIsForm((p) => !p);
-                }}
-              >
-                <Link to={`/User/${infoUser.MA_KH}`}>Thông Tin Cá Nhân</Link>
-              </li>
-              <li onClick={logout}>Đăng Xuất</li>
-            </ul>
+        <div className={clsx("col", styles.rowHeader)}>
+          <img src={img} alt="Example Image" />
+          <div className={styles.dropSeting}>
+            <div
+              onClick={() => {
+                handleTogger();
+              }}
+              className={clsx(styles.iconSetting, { [styles.active]: isForm })}
+            >
+              <FontAwesomeIcon icon={faCaretDown} />
+            </div>
+            {isForm && (
+              <div className={styles.menuSetting}>
+                <ul>
+                  <li
+                    onClick={() => {
+                      setIsForm((p) => !p);
+                    }}
+                  >
+                    <Link to="/User/Oder">Đơn Đã Đặt</Link>
+                  </li>
+                  <li
+                    onClick={() => {
+                      setIsForm((p) => !p);
+                    }}
+                  >
+                    <Link to={`/User/${infoUser.MA_KH}`}>
+                      Thông Tin Cá Nhân
+                    </Link>
+                  </li>
+                  <li onClick={logout}>Đăng Xuất</li>
+                </ul>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
       {isForm && <Blur onClick={handleTogger} />}
     </div>
@@ -424,10 +438,13 @@ function ActionUser() {
 }
 
 function Header() {
-  console.log("reRenderHeader");
   const { isLogin, keyword, setKeyword, myCarts } = useContext(Context);
+  const [isDNDKY, setDNDKY] = useState(false);
+  const [active, setActive] = useState(false);
+  const [isClickRemove, setClickRemove] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const domDKYDN = useRef();
   useEffect(() => {
     setKeyword("");
   }, [pathname]);
@@ -440,49 +457,111 @@ function Header() {
     e.preventDefault();
   }
 
+  function HanderlerRemove(e) {
+    if (domDKYDN.current && !domDKYDN.current.contains(e.target)) {
+      setClickRemove((p) => !p);
+    }
+  }
+
+  function ClickUser() {
+    setDNDKY(true);
+    setActive(false);
+  }
+  useEffect(() => {
+    setActive(true);
+    let id = setTimeout(() => {
+      setDNDKY(false);
+    }, 300);
+    return () => {
+      clearTimeout(id);
+    };
+  }, [isClickRemove]);
+  useEffect(() => {
+    document.addEventListener("click", HanderlerRemove);
+    return () => {
+      document.removeEventListener("click", HanderlerRemove);
+    };
+  }, []);
+
   return (
-    <div className={styles.wrapper}>
-      <div className="grid wide" id={styles.rowHeader}>
-        {isLogin ? <ActionUser /> : <DangKyAndDangNhap />}
-
-        <div className={styles.LogoWeb}>HOÀNG</div>
-
-        <div className={styles.Action}>
-          <div className={styles.search}>
-            <FontAwesomeIcon icon={faSearch} />
-            <form onSubmit={HandelerSubmit}>
-              <div className={styles.box}>
-                <input
-                  value={keyword}
-                  onChange={(e) => {
-                    searchProducts(e);
-                  }}
-                  type="text"
-                />
-                <button>
-                  <FontAwesomeIcon icon={faSearch} />
-                </button>
+    <div className={clsx(styles.wrapper)}>
+      <div className={clsx("grid", "wide", styles.customGird)}>
+        <div className={clsx("row", styles.rowHeader)}>
+          <div className="col">
+            <div className="row">
+              <div className="col c-0 l-12 m-12">
+                {isLogin ? <ActionUser /> : <DangKyAndDangNhap />}
               </div>
-            </form>
+              <div className="col l-0 m-0 ">
+                {isLogin ? (
+                  <ActionUser />
+                ) : (
+                  <div className={styles.BoxUserIcon} ref={domDKYDN}>
+                    <FontAwesomeIcon
+                      onClick={ClickUser}
+                      icon={faUser}
+                      className={styles.iconUser}
+                    />
+                    {isDNDKY && (
+                      <div
+                        className={clsx(styles.BoxDKYDN, {
+                          [styles.active]: active,
+                        })}
+                      >
+                        <DangKyAndDangNhap />
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-          <div
-            onClick={() => {
-              navigate("/Cart");
-            }}
-            className={styles.Cart}
-          >
-            <svg
-              fill="white"
-              width="44px"
-              height="44px"
-              viewBox="0 0 1024 1024"
-              xmlns="http://www.w3.org/2000/svg"
-              className="icon"
-            >
-              <path d="M832 312H696v-16c0-101.6-82.4-184-184-184s-184 82.4-184 184v16H192c-17.7 0-32 14.3-32 32v536c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V344c0-17.7-14.3-32-32-32zm-432-16c0-61.9 50.1-112 112-112s112 50.1 112 112v16H400v-16zm392 544H232V384h96v88c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-88h224v88c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-88h96v456z"></path>
-            </svg>
-            <div style={{ left: myCarts.length < 10 ? "17.5px" : "13px" }}>
-              {myCarts.length}
+
+          <div className="col ">
+            <div className={styles.LogoWeb} id={styles.cay}>
+              HOÀNG
+            </div>
+          </div>
+
+          <div className="col ">
+            <div className={styles.Action}>
+              <div className={styles.search}>
+                <FontAwesomeIcon icon={faSearch} />
+                <form onSubmit={HandelerSubmit}>
+                  <div className={styles.box}>
+                    <input
+                      value={keyword}
+                      onChange={(e) => {
+                        searchProducts(e);
+                      }}
+                      type="text"
+                    />
+                    <button>
+                      <FontAwesomeIcon icon={faSearch} />
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div
+                onClick={() => {
+                  navigate("/Cart");
+                }}
+                className={styles.Cart}
+              >
+                <svg
+                  fill="white"
+                  width="44px"
+                  height="44px"
+                  viewBox="0 0 1024 1024"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="icon"
+                >
+                  <path d="M832 312H696v-16c0-101.6-82.4-184-184-184s-184 82.4-184 184v16H192c-17.7 0-32 14.3-32 32v536c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V344c0-17.7-14.3-32-32-32zm-432-16c0-61.9 50.1-112 112-112s112 50.1 112 112v16H400v-16zm392 544H232V384h96v88c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-88h224v88c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-88h96v456z"></path>
+                </svg>
+                <div style={{ left: myCarts.length < 10 ? "17.5px" : "13px" }}>
+                  {myCarts.length}
+                </div>
+              </div>
             </div>
           </div>
         </div>

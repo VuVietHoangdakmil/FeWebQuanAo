@@ -50,41 +50,52 @@ const TextInforUser = ({
   }
   return (
     <div className={styles.InfoUser}>
-      <FontAwesomeIcon
-        ref={domEdit}
-        className={styles.EditImg}
-        icon={faEdit}
-        onClick={ClickActiveFormUpLoad}
-      />
-      <img src={img} />
-      <div className={styles.InfoUserChildren}>
-        <p className={styles.NameUser}>{Name}</p>
-        <p className={styles.PhoneNumberUser}>{sdt}</p>
-      </div>
-
-      {isFormUpdate && (
-        <div
-          ref={domFormUpdate}
-          className={clsx(styles.EditFile, {
-            [styles.active]: !isFormUpdate,
-          })}
-        >
-          <div className={styles.wrap}>
-            <div className={styles.fileUpload}>
-              <input type="file" onChange={(e) => HanderLeOnChangeFile(e)} />
-              <FontAwesomeIcon icon={faUpload} className={styles.iconUpLoad} />
+      <div className={`col  ${styles.ColAvtarMB}`}>
+        <div className={styles.ColAvtarMB1}>
+          <img src={img} />
+          <FontAwesomeIcon
+            ref={domEdit}
+            className={styles.EditImg}
+            icon={faEdit}
+            onClick={ClickActiveFormUpLoad}
+          />
+          {isFormUpdate && (
+            <div
+              ref={domFormUpdate}
+              className={clsx(styles.EditFile, {
+                [styles.active]: !isFormUpdate,
+              })}
+            >
+              <div className={styles.wrap}>
+                <div className={styles.fileUpload}>
+                  <input
+                    type="file"
+                    onChange={(e) => HanderLeOnChangeFile(e)}
+                  />
+                  <FontAwesomeIcon
+                    icon={faUpload}
+                    className={styles.iconUpLoad}
+                  />
+                </div>
+              </div>
+              <Button
+                width="100px"
+                fontSize="13px"
+                height="40px"
+                onClick={UploadFile}
+              >
+                Cập Nhật File
+              </Button>
             </div>
-          </div>
-          <Button
-            width="100px"
-            fontSize="13px"
-            height="40px"
-            onClick={UploadFile}
-          >
-            Cập Nhật File
-          </Button>
+          )}
         </div>
-      )}
+      </div>
+      <div className={`col  ${styles.ColAvtarMB}`}>
+        <div className={styles.InfoUserChildren}>
+          <p className={styles.NameUser}>{Name}</p>
+          <p className={styles.PhoneNumberUser}>{sdt}</p>
+        </div>
+      </div>
     </div>
   );
 };
@@ -92,7 +103,7 @@ const UpdateUser = ({ HanderLeOnChange, Value }) => {
   return (
     <>
       <div className={clsx("row", styles.customrow)}>
-        <div className="col l-6">
+        <div className="col l-6 c-12 m-6">
           <div className={styles.formGroup}>
             <Input
               value={Value.name}
@@ -106,7 +117,7 @@ const UpdateUser = ({ HanderLeOnChange, Value }) => {
             />
           </div>
         </div>
-        <div className="col l-6">
+        <div className="col l-6 c-12 m-6">
           <div className={styles.formGroup}>
             <Input
               value={Value.sdtUser}
@@ -122,7 +133,7 @@ const UpdateUser = ({ HanderLeOnChange, Value }) => {
         </div>
       </div>
       <div className={clsx("row", styles.customrow)}>
-        <div className="col l-6">
+        <div className="col l-6 c-12 m-6">
           <div className={styles.formGroup}>
             <Input
               value={Value.EmailUser}

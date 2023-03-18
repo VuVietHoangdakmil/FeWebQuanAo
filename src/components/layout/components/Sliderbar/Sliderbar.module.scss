@@ -1,29 +1,81 @@
-.wrapper{
-    width: 100%;
-    background-color: #dcdcdc;
-    height: 50px;
+.wrapper {
+  width: 100%;
+  background-color: var(--color_SidleBar);
+  height: 50px;
 }
-#rowHeader{
+
+#rowHeader {
+  height: 100%;
+
+  ul {
+    display: flex;
     height: 100%;
-    ul{
-        display: flex;
-        height: 100%;
-        align-items: center;
-        justify-content: space-evenly;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  li {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  a {
+    color: var(--textTitle_color);
+    font-size: 20px;
+    font-weight: 700;
+    padding: 11px 10px;
+  }
+
+  li.active {
+    border-bottom: 2px solid var(--color_red);
+  }
+}
+.CustomRows {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.iconBar {
+  font-size: 20px;
+  color: black;
+  margin-left: 11%;
+  cursor: pointer;
+}
+
+#BarMobie {
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+  background-color: white;
+  top: 50px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s linear;
+  height: 0;
+  li {
+    transition: all 0.5s linear;
+    // height: 0;
+    a {
+      width: 100%;
+      height: 100%;
     }
-    li{
-        height: 100%;
-        display: flex;
-        align-items: center;
+    &.active1 {
+      a {
+        color: rgb(249, 249, 249);
+      }
+      background-color: rgb(200, 96, 96);
     }
-    a{
-        color: var(--textTitle_color);
-        font-size: 20px;
-        font-weight: 700;
-       padding: 11px 10px;
-       
+
+    &:hover {
+      a {
+        color: white;
+      }
+      background-color: rgb(200, 96, 96);
     }
-    li.active{
-        border-bottom: 2px solid var(--color_red);
-    }
+  }
+
+  
+  &.active3 {
+    height: 240px;
+  }
 }

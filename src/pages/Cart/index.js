@@ -74,43 +74,60 @@ function ActionCart() {
     return (
       <Fragment>
         <div className={clsx("row", styles.Title_Table)}>
-          <div className="col l-6">Sản Phẩm</div>
-          <div className="col l-2">Giá</div>
-          <div className="col l-2">Số Lượng</div>
-          <div className={clsx(styles.customCol, "col", "l-2")}>
+          <div className="col l-6 c-0 m-6">Sản Phẩm</div>
+          <div className="col l-2 c-0 m-2">Giá</div>
+          <div className="col l-2 c-0 m-2">Số Lượng</div>
+          <div
+            className={clsx(styles.customCol, "col", "l-2", "c-0", "m-2")}
+            id={styles.customNone}
+          >
             <span>Tổng</span>
           </div>
         </div>
-        <ul className={styles.wrapperROWCONTENT}>
+        <ul className={`${styles.wrapperROWCONTENT}`}>
           {myCartsReversed.map((item, index) => (
             <li
               key={`${item.MA_SP}${item.MA_SIZE}`}
-              className={clsx("row", styles.ConTen_Table)}
+              className={clsx(
+                "row",
+                styles.ConTen_Table,
+                styles.ConTen_TableMobie
+              )}
             >
-              <div className="col l-6">
+              <div className={`col l-6 c-10 ${styles.cusTomCol2}`}>
                 <div className={styles.conTentSp}>
-                  <button
-                    onClick={() => {
-                      deleteSP(index);
-                    }}
-                  >
-                    <FontAwesomeIcon
-                      icon={faXmark}
-                      className={styles.iconremove}
-                    />
-                  </button>
-                  <img src={`/img/imgProduct/${item.HINH_SP}`} />
-                  <span>{truncateString(item.TEN_SP, 15)}</span>
-                  <span className={styles.conTentSize}>{item.TEN_SIZE}</span>
+                  <div className={styles.rowMB}>
+                    <div className={styles.colMB}>
+                      <div className={styles.posisionMB}>
+                        <img src={`/img/imgProduct/${item.HINH_SP}`} />
+                        <span className={styles.conTentSize}>
+                          {item.TEN_SIZE}
+                        </span>
+                        <button
+                          onClick={() => {
+                            deleteSP(index);
+                          }}
+                        >
+                          <FontAwesomeIcon
+                            icon={faXmark}
+                            className={styles.iconremove}
+                          />
+                        </button>
+                      </div>
+                    </div>
+                    <div className={styles.colMB}>
+                      <span>{truncateString(item.TEN_SP, 15)}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="col l-2">
+              <div className={`col l-2 c-8 ${styles.cusTomCol2}`}>
                 <p className={styles.conTentPrice}>
                   {addCommas(item.GIA_BAN)} đ
                 </p>
               </div>
-              <div className="col l-2">
-                <div className={styles.conTentQuality}>
+              <div className={`col l-2 c-8 ${styles.cusTomCol2}`}>
+                <div className={clsx(styles.conTentQuality, styles.cusTomCol2)}>
                   <button
                     onClick={() => {
                       GiamSL(`SL${item.MA_SP}${item.MA_SIZE}`);
@@ -133,7 +150,7 @@ function ActionCart() {
                   </button>
                 </div>
               </div>
-              <div className="col l-2">
+              <div className={`col l-2 c-8 ${styles.cusTomCol2}`}>
                 <p className={styles.conTentPriceSum}>
                   {addCommas(item.Price)} đ
                 </p>
@@ -141,14 +158,16 @@ function ActionCart() {
             </li>
           ))}
         </ul>
-        <Button
-          onClick={updateSL}
-          width={"200px"}
-          height="40px"
-          fontSize="18px"
-        >
-          Cập Nhật
-        </Button>
+        <div className={styles.btnUpdateMobie}>
+          <Button
+            onClick={updateSL}
+            width={"200px"}
+            height="40px"
+            fontSize="18px"
+          >
+            Cập Nhật
+          </Button>
+        </div>
       </Fragment>
     );
   }
@@ -194,7 +213,7 @@ const ActionPay = memo(() => {
     );
   }
   return (
-    <div className={styles.ActionPay}>
+    <div className={clsx(styles.ActionPay, styles.cusTomMobieColAction)}>
       <Title>Tổng Tiền </Title>
       <Row Title="Tổng Số Lượng"> {myCarts.length} </Row>
       <Row Title="Tổng Tiền"> {addCommas(SumMoneyCart)} đ </Row>
@@ -213,10 +232,10 @@ function Carts() {
       <div className="grid wide">
         {myCarts.length > 0 ? (
           <div className="row">
-            <div className="col l-7">
+            <div className="col l-7 c-12">
               <ActionCart />
             </div>
-            <div className="col l-5">
+            <div className={`col l-5 c-12 `}>
               <ActionPay />
             </div>
           </div>

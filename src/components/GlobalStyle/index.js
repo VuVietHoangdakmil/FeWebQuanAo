@@ -1,6 +1,7 @@
 import "./GlobalStyle.scss";
-function GlobaStyle({children}) {
-    return (children);
+import "./StylesReponsive.scss";
+function GlobaStyle({ children }) {
+  return children;
 }
 
 export default GlobaStyle;

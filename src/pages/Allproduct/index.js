@@ -127,7 +127,7 @@ function Allproduct() {
           <h1 className={styles.title}>Tất cả sản phẩm</h1>
           <div className={clsx("row", styles.cusTomRow)}>
             {slicedData.map((item) => (
-              <div className="col l-3" key={item.MA_SP}>
+              <div className="col l-3 c-12" key={item.MA_SP}>
                 <Product
                   herf={`/Product/detail/${item.MA_SP}`}
                   src={`/img/imgProduct/${item.HINH_SP}`}
