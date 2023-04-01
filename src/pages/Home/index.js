@@ -10,7 +10,6 @@ import clsx from "clsx";
 import { useState, useEffect, useContext, memo } from "react";
 import axios from "axios";
 
-
 const Slider = memo(() => {
   console.log("render Slider");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -33,7 +32,6 @@ const Slider = memo(() => {
   };
 
   return (
-
     <div className={styles.slider}>
       <button className={styles.prev} onClick={handleClickPrev}>
         &#10094;
@@ -101,6 +99,7 @@ function ProductNew() {
       .then(({ data }) => {
         const { success, result, message } = data;
         if (success) {
+          console.log(success);
           setDataProduct(result);
         } else {
           console.log("sai");

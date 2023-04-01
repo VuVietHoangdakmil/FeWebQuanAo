@@ -654,6 +654,7 @@ function Payment() {
       .all([PostDataDatHang(), PostSendMail()])
       .then(
         axios.spread((DatHang, sendMail) => {
+          console.log(sendMail)
           if (DatHang.data.success) {
             setMyCarts([]);
             setSecttion("myCarts", []);

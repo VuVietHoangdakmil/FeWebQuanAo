@@ -12,11 +12,13 @@
     height: 100%;
     align-items: center;
     justify-content: space-evenly;
+    margin: 0;
   }
   li {
     height: 100%;
     display: flex;
     align-items: center;
+    padding-bottom:4px ;
   }
   a {
     color: var(--textTitle_color);
