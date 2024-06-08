@@ -1,6 +1,6 @@
 {
   "name": "ui_ban_quan_ao",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
